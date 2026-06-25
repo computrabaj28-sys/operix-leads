@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Operix — Automatización con IA para Clínicas Dentales</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#fff;color:#1a1a1a;line-height:1.6}
+
+/* VARS */
+:root{
+  --brand:#1D9E75;
+  --brand-dark:#0F6E56;
+  --brand-light:#E1F5EE;
+  --navy:#0D1F2D;
+  --navy2:#142535;
+  --text:#1a1a1a;
+  --muted:#6b7280;
+  --border:#e5e7eb;
+  --white:#ffffff;
+}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;background:rgba(13,31,45,0.97);backdrop-filter:blur(10px);padding:.9rem 2rem;display:flex;align-items:center;justify-content:space-between;z-index:200;border-bottom:1px solid rgba(255,255,255,0.07)}
+.logo{font-size:1.5rem;font-weight:800;color:#fff;letter-spacing:-1px}
+.logo em{color:var(--brand);font-style:normal}
+.nav-links{display:flex;gap:1.8rem;list-style:none}
+.nav-links a{color:rgba(255,255,255,0.7);text-decoration:none;font-size:.88rem;font-weight:500;transition:color .15s}
+.nav-links a:hover{color:#fff}
+.nav-btn{background:var(--brand);color:#fff;border:none;padding:.55rem 1.3rem;border-radius:8px;font-size:.88rem;font-weight:700;cursor:pointer;transition:background .15s}
+.nav-btn:hover{background:var(--brand-dark)}
+
+/* HERO */
+.hero{background:var(--navy);padding:8rem 2rem 5rem;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(29,158,117,0.12) 0%,transparent 70%);pointer-events:none}
+.trust-bar{display:flex;justify-content:center;gap:1.8rem;flex-wrap:wrap;margin-bottom:2.5rem}
+.trust-item{display:flex;align-items:center;gap:.45rem;font-size:.82rem;color:rgba(255,255,255,0.65);font-weight:500}
+.trust-dot{width:6px;height:6px;background:var(--brand);border-radius:50%;flex-shrink:0}
+.trust-item strong{color:#fff}
+.hero-tag{display:inline-flex;align-items:center;gap:.5rem;background:rgba(29,158,117,0.15);border:1px solid rgba(29,158,117,0.3);border-radius:100px;color:var(--brand);font-size:.8rem;font-weight:700;padding:.35rem 1rem;margin-bottom:1.5rem;letter-spacing:.05em;text-transform:uppercase}
+.hero h1{font-size:clamp(2.2rem,5vw,3.6rem);font-weight:900;color:#fff;line-height:1.1;letter-spacing:-1.5px;margin-bottom:1.3rem;max-width:760px;margin-left:auto;margin-right:auto}
+.hero h1 em{color:var(--brand);font-style:normal}
+.hero p{font-size:1.1rem;color:rgba(255,255,255,0.65);max-width:540px;margin:0 auto 2.5rem;line-height:1.7}
+.hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:1.5rem}
+.btn-primary{background:var(--brand);color:#fff;border:none;padding:.9rem 2rem;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;transition:all .15s;box-shadow:0 4px 24px rgba(29,158,117,0.35);text-decoration:none;display:inline-block}
+.btn-primary:hover{background:var(--brand-dark);transform:translateY(-2px);box-shadow:0 6px 28px rgba(29,158,117,0.45)}
+.btn-secondary{background:transparent;color:#fff;border:1px solid rgba(255,255,255,0.25);padding:.9rem 2rem;border-radius:10px;font-size:1rem;font-weight:600;cursor:pointer;transition:all .15s;text-decoration:none;display:inline-block}
+.btn-secondary:hover{border-color:rgba(255,255,255,0.5);background:rgba(255,255,255,0.05)}
+.hero-note{font-size:.8rem;color:rgba(255,255,255,0.4)}
+
+/* STATS STRIP */
+.stats-strip{background:var(--brand);padding:1.8rem 2rem}
+.stats-grid{display:flex;justify-content:center;gap:3rem;flex-wrap:wrap;max-width:800px;margin:0 auto;text-align:center}
+.stat-num{font-size:2.2rem;font-weight:900;color:#fff;letter-spacing:-1px}
+.stat-label{font-size:.8rem;color:rgba(255,255,255,0.8);margin-top:.15rem}
+
+/* SECTION BASE */
+.section{padding:5rem 2rem;max-width:960px;margin:0 auto}
+.section-tag{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--brand);margin-bottom:.8rem}
+.section h2{font-size:clamp(1.6rem,3vw,2.3rem);font-weight:900;letter-spacing:-.5px;line-height:1.2;margin-bottom:.9rem}
+.section .lead{font-size:1rem;color:var(--muted);max-width:520px;margin-bottom:3rem}
+.bg-gray{background:#f9fafb;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.bg-navy{background:var(--navy)}
+
+/* PAIN */
+.pain-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1.2rem}
+.pain-card{background:#fff5f5;border:1px solid #fecaca;border-radius:14px;padding:1.4rem}
+.pain-card .icon{font-size:1.4rem;margin-bottom:.7rem}
+.pain-card h3{font-size:.92rem;font-weight:700;margin-bottom:.3rem;color:#991b1b}
+.pain-card p{font-size:.83rem;color:#6b7280;line-height:1.5}
+
+/* SOLUTIONS */
+.sol-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1.2rem}
+.sol-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:1.4rem;transition:box-shadow .2s}
+.sol-card:hover{box-shadow:0 4px 20px rgba(0,0,0,0.08)}
+.sol-icon{width:44px;height:44px;background:var(--brand-light);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;margin-bottom:1rem}
+.sol-card h3{font-size:.92rem;font-weight:700;margin-bottom:.35rem}
+.sol-card p{font-size:.83rem;color:var(--muted);line-height:1.5}
+
+/* STEPS */
+.steps-list{display:flex;flex-direction:column;gap:2rem;max-width:620px}
+.step{display:flex;gap:1.3rem;align-items:flex-start}
+.step-num{width:42px;height:42px;min-width:42px;background:var(--brand);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.95rem}
+.step h3{font-size:.97rem;font-weight:700;margin-bottom:.25rem}
+.step p{font-size:.86rem;color:var(--muted)}
+
+/* TESTIMONIALS */
+.testi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.2rem}
+.testi-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:1.5rem}
+.stars{color:var(--brand);font-size:.95rem;margin-bottom:.8rem}
+.testi-text{font-size:.88rem;color:rgba(255,255,255,0.8);line-height:1.6;margin-bottom:1.2rem;font-style:italic}
+.testi-author{display:flex;align-items:center;gap:.7rem}
+.testi-avatar{width:36px;height:36px;background:var(--brand);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.82rem;color:#fff;flex-shrink:0}
+.testi-name{font-size:.83rem;font-weight:700;color:#fff}
+.testi-clinic{font-size:.78rem;color:rgba(255,255,255,0.5)}
+.testi-badge{display:inline-block;background:rgba(29,158,117,0.2);color:var(--brand);border-radius:6px;font-size:.73rem;font-weight:700;padding:.2rem .5rem;margin-top:.5rem}
+
+/* FAQ */
+.faq-list{display:flex;flex-direction:column;gap:.7rem;max-width:680px}
+.faq-item{border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.faq-q{width:100%;background:none;border:none;padding:1.1rem 1.3rem;text-align:left;font-size:.93rem;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:1rem;font-family:inherit}
+.faq-q:hover{background:#f9fafb}
+.faq-arrow{font-size:.75rem;transition:transform .2s;flex-shrink:0}
+.faq-a{display:none;padding:0 1.3rem 1.1rem;font-size:.87rem;color:var(--muted);line-height:1.65}
+.faq-item.open .faq-arrow{transform:rotate(180deg)}
+.faq-item.open .faq-a{display:block}
+
+/* CTA FINAL */
+.cta-final{background:var(--navy);padding:5.5rem 2rem;text-align:center}
+.cta-final h2{font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:900;color:#fff;letter-spacing:-1px;margin-bottom:1rem}
+.cta-final p{font-size:1.05rem;color:rgba(255,255,255,0.65);max-width:480px;margin:0 auto 2.5rem}
+.btn-white{background:#fff;color:var(--navy);border:none;padding:.95rem 2.2rem;border-radius:10px;font-size:1rem;font-weight:800;cursor:pointer;transition:all .15s;box-shadow:0 4px 20px rgba(0,0,0,0.2);text-decoration:none;display:inline-block}
+.btn-white:hover{transform:translateY(-2px);box-shadow:0 6px 28px rgba(0,0,0,0.3)}
+.cta-note{font-size:.8rem;color:rgba(255,255,255,0.4);margin-top:1rem}
+
+/* FOOTER */
+footer{background:#080f14;padding:2.5rem 2rem;text-align:center;border-top:1px solid rgba(255,255,255,0.06)}
+.footer-logo{font-size:1.3rem;font-weight:800;color:#fff;margin-bottom:.5rem}
+.footer-logo em{color:var(--brand);font-style:normal}
+footer p{font-size:.8rem;color:rgba(255,255,255,0.3)}
+
+/* MODAL */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:999;align-items:center;justify-content:center;padding:1rem}
+.overlay.on{display:flex}
+.modal{background:#fff;border-radius:18px;width:100%;max-width:540px;max-height:92vh;overflow-y:auto;padding:2rem 2.2rem;position:relative;animation:popIn .2s ease}
+@keyframes popIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+.modal-x{position:absolute;top:1rem;right:1rem;background:#f3f4f6;border:none;width:30px;height:30px;border-radius:50%;font-size:.9rem;cursor:pointer;color:#666;display:flex;align-items:center;justify-content:center}
+.modal-x:hover{background:#e5e7eb}
+.modal h2{font-size:1.25rem;font-weight:800;margin-bottom:.25rem}
+.modal .msub{font-size:.87rem;color:var(--muted);margin-bottom:1.8rem}
+
+/* FORM */
+.fg{margin-bottom:1rem}
+.fg label{display:block;font-size:.82rem;font-weight:600;margin-bottom:.3rem}
+.fg label .r{color:#e74c3c;margin-left:2px}
+.fg input,.fg select,.fg textarea{width:100%;padding:.6rem .85rem;border:1px solid #d1d5db;border-radius:8px;font-size:.92rem;color:#1a1a1a;background:#fff;outline:none;font-family:inherit;transition:border-color .15s}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--brand);box-shadow:0 0 0 3px rgba(29,158,117,0.1)}
+.fg input::placeholder,.fg textarea::placeholder{color:#c0c0c0}
+.fg select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23888' d='M6 8L0 0h12z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .85rem center}
+.fg textarea{resize:vertical;min-height:72px}
+.r2{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+.consent-row{display:flex;gap:.5rem;align-items:flex-start;margin-top:.3rem}
+.consent-row input[type=checkbox]{width:15px;height:15px;min-width:15px;margin-top:3px;accent-color:var(--brand);cursor:pointer}
+.consent-row label{font-size:.79rem;color:var(--muted);font-weight:400;margin:0;cursor:pointer;line-height:1.45}
+.consent-row label a{color:var(--brand);text-decoration:none}
+.ferr{font-size:.75rem;color:#e74c3c;margin-top:.2rem;display:none}
+.fg input.err,.fg select.err{border-color:#e74c3c}
+.btn-send{width:100%;padding:.85rem;background:var(--brand);color:#fff;border:none;border-radius:10px;font-size:.98rem;font-weight:700;cursor:pointer;margin-top:1.2rem;transition:background .15s}
+.btn-send:hover{background:var(--brand-dark)}
+.btn-send:disabled{background:#aaa;cursor:not-allowed}
+
+/* SUCCESS */
+.success{display:none;text-align:center;padding:2.5rem 1rem}
+.success .ok{width:60px;height:60px;background:var(--brand-light);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.2rem;font-size:1.6rem}
+.success h3{font-size:1.2rem;font-weight:800;margin-bottom:.5rem}
+.success p{font-size:.88rem;color:var(--muted);line-height:1.6}
+
+@media(max-width:600px){
+  .nav-links{display:none}
+  .r2{grid-template-columns:1fr}
+  .hero h1{font-size:2rem}
+  .stats-grid{gap:1.5rem}
+  .modal{padding:1.5rem 1.2rem}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Operix<em>.</em></div>
+  <ul class="nav-links">
+    <li><a href="#problemas">Problemas</a></li>
+    <li><a href="#soluciones">Soluciones</a></li>
+    <li><a href="#testimonios">Clientes</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <button class="nav-btn" onclick="openModal()">Diagnóstico gratuito →</button>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="trust-bar">
+    <div class="trust-item"><div class="trust-dot"></div>🏥 <strong>Clínicas en Barcelona y Madrid</strong></div>
+    <div class="trust-item"><div class="trust-dot"></div>⭐ <strong>Resultados en 14 días</strong></div>
+    <div class="trust-item"><div class="trust-dot"></div>📉 <strong>-60% cancelaciones</strong></div>
+    <div class="trust-item"><div class="trust-dot"></div>💰 <strong>ROI en 60 días</strong></div>
+  </div>
+  <div class="hero-tag">✦ Automatización con IA para Clínicas Dentales</div>
+  <h1>Tu clínica trabajando sola.<br><em>Tus pacientes, siempre atendidos.</em></h1>
+  <p>Automatizamos seguimientos, reactivaciones y captación de pacientes para que tu equipo se enfoque en lo que importa: la atención clínica.</p>
+  <div class="hero-btns">
+    <button class="btn-primary" onclick="openModal()">Solicitar diagnóstico gratuito →</button>
+    <a href="#soluciones" class="btn-secondary">Ver cómo funciona</a>
+  </div>
+  <p class="hero-note">Sin compromiso · Respuesta en menos de 24 horas · 100% en español</p>
+</div>
+
+<!-- STATS -->
+<div class="stats-strip">
+  <div class="stats-grid">
+    <div><div class="stat-num">-60%</div><div class="stat-label">cancelaciones sin aviso</div></div>
+    <div><div class="stat-num">+40%</div><div class="stat-label">pacientes que vuelven</div></div>
+    <div><div class="stat-num">2h</div><div class="stat-label">ahorradas al día en gestión</div></div>
+    <div><div class="stat-num">14</div><div class="stat-label">días hasta ver resultados</div></div>
+  </div>
+</div>
+
+<!-- PROBLEMAS -->
+<div id="problemas">
+<div class="section">
+  <div class="section-tag">El problema</div>
+  <h2>¿Alguna de estas situaciones te resulta familiar?</h2>
+  <p class="lead">Son los problemas más comunes en clínicas dentales que trabajan sin automatización.</p>
+  <div class="pain-grid">
+    <div class="pain-card"><div class="icon">😟</div><h3>Pacientes que no vuelven</h3><p>Vinieron una vez y desaparecieron. Sin seguimiento automático, los perdés para siempre.</p></div>
+    <div class="pain-card"><div class="icon">📅</div><h3>Agenda con huecos</h3><p>Espacios vacíos que podrían cubrirse reactivando pacientes inactivos de forma automática.</p></div>
+    <div class="pain-card"><div class="icon">📋</div><h3>Demasiado trabajo manual</h3><p>Recordatorios, confirmaciones y seguimientos que consumen horas de tu equipo cada semana.</p></div>
+    <div class="pain-card"><div class="icon">📉</div><h3>Sin visibilidad del negocio</h3><p>No sabés cuántos pacientes perdiste este mes ni qué tratamientos tienen mayor abandono.</p></div>
+  </div>
+</div>
+</div>
+
+<!-- SOLUCIONES -->
+<div id="soluciones" class="bg-gray">
+<div class="section">
+  <div class="section-tag">La solución</div>
+  <h2>Lo que implementamos en tu clínica</h2>
+  <p class="lead">Sistemas de automatización que trabajan 24/7, sin que tengas que hacer nada técnico.</p>
+  <div class="sol-grid">
+    <div class="sol-card"><div class="sol-icon">🔄</div><h3>Reactivación automática</h3><p>Mensajes automáticos por WhatsApp o email a pacientes que no vienen hace 3, 6 o 12 meses.</p></div>
+    <div class="sol-card"><div class="sol-icon">✅</div><h3>Confirmación de citas</h3><p>Recordatorios automáticos 24h y 2h antes. Reducís las ausencias hasta un 60%.</p></div>
+    <div class="sol-card"><div class="sol-icon">💬</div><h3>Seguimiento post-tratamiento</h3><p>Mensajes automáticos tras cada intervención para fidelizar y generar reseñas positivas.</p></div>
+    <div class="sol-card"><div class="sol-icon">📊</div><h3>Panel de control</h3><p>Tablero en tiempo real con métricas clave: pacientes activos, tasa de retorno, ingresos.</p></div>
+    <div class="sol-card"><div class="sol-icon">🤖</div><h3>Chatbot 24/7</h3><p>Responde consultas, horarios y precios fuera de horario. Tu clínica nunca queda sin respuesta.</p></div>
+    <div class="sol-card"><div class="sol-icon">💰</div><h3>Seguimiento de presupuestos</h3><p>Reactivación automática de presupuestos sin cerrar. Cerrás más casos sin llamar a nadie.</p></div>
+  </div>
+</div>
+</div>
+
+<!-- PROCESO -->
+<div class="section">
+  <div class="section-tag">El proceso</div>
+  <h2>De cero a funcionando en 2 semanas</h2>
+  <p class="lead">Implementación sin interrumpir tu operación. Vos no tocás nada técnico.</p>
+  <div class="steps-list">
+    <div class="step"><div class="step-num">1</div><div><h3>Diagnóstico gratuito (20 min)</h3><p>Analizamos tu clínica, identificamos los puntos de fuga de pacientes y te mostramos el potencial real de mejora.</p></div></div>
+    <div class="step"><div class="step-num">2</div><div><h3>Diseño a medida</h3><p>Creamos los flujos adaptados a tu clínica, tu software de gestión y tu forma de trabajar.</p></div></div>
+    <div class="step"><div class="step-num">3</div><div><h3>Implementación en 2 semanas</h3><p>Configuramos, conectamos y probamos todo. En menos de 2 horas de tu tiempo ya está listo.</p></div></div>
+    <div class="step"><div class="step-num">4</div><div><h3>Resultados desde el día 1</h3><p>El sistema trabaja solo. Te reportamos los resultados cada mes y optimizamos lo que sea necesario.</p></div></div>
+  </div>
+</div>
+
+<!-- TESTIMONIOS -->
+<div id="testimonios" class="bg-navy">
+<div class="section">
+  <div class="section-tag" style="color:var(--brand)">Lo que dicen nuestros clientes</div>
+  <h2 style="color:#fff">Clínicas que ya trabajan con Operix</h2>
+  <p class="lead" style="color:rgba(255,255,255,0.6);margin-bottom:2.5rem">Resultados reales de clínicas en Barcelona y Madrid.</p>
+  <div class="testi-grid">
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">"Desde que implementamos Operix, las cancelaciones bajaron un 60%. El sistema confirma las citas solo, sin que mi equipo tenga que levantar el teléfono."</p>
+      <div class="testi-author"><div class="testi-avatar">MJ</div><div><div class="testi-name">Dra. María José Sánchez</div><div class="testi-clinic">Clínica Dental Gràcia · Barcelona</div></div></div>
+      <span class="testi-badge">-60% cancelaciones</span>
+    </div>
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">"Teníamos presupuestos sin cerrar acumulándose. Con el seguimiento automático recuperamos pacientes que antes se perdían. En 60 días amortizamos la inversión."</p>
+      <div class="testi-author"><div class="testi-avatar">CR</div><div><div class="testi-name">Carlos Rodríguez</div><div class="testi-clinic">Ortodoncia Madrid Centro · Madrid</div></div></div>
+      <span class="testi-badge">ROI en 60 días</span>
+    </div>
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">"Ahorramos más de 2 horas al día en gestión de agenda. Mi equipo ya no llama para confirmar citas — el sistema lo hace solo y los pacientes responden mejor."</p>
+      <div class="testi-author"><div class="testi-avatar">AB</div><div><div class="testi-name">Ana Belén Torres</div><div class="testi-clinic">Clínica Torres · Barcelona</div></div></div>
+      <span class="testi-badge">2h/día ahorradas</span>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- FAQ -->
+<div id="faq">
+<div class="section">
+  <div class="section-tag">Preguntas frecuentes</div>
+  <h2>Todo lo que necesitás saber</h2>
+  <p class="lead">Respondemos las dudas más comunes antes de empezar.</p>
+  <div class="faq-list">
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">¿Qué es exactamente lo que hace Operix? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">Operix implementa sistemas de automatización e IA en tu clínica dental para que las tareas repetitivas ocurran solas: confirmaciones de citas, recordatorios, seguimiento de pacientes inactivos, respuestas automáticas y más. El resultado: menos trabajo manual para tu equipo y más pacientes fidelizados.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">¿Necesito conocimientos técnicos? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">No, en absoluto. Nosotros nos encargamos de toda la configuración e instalación. Solo necesitás una hora de tu tiempo para que te expliquemos cómo usar el panel de control. Tu equipo no necesita aprender nada nuevo.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">¿Se integra con mi software actual de gestión? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">Sí. Nos integramos con los principales softwares de gestión dental usados en España: Gesden, Dentix, Clínica Cloud, Google Calendar, y muchos más. Nuestro equipo técnico gestiona toda la conexión sin interrumpir tu operación.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">¿En cuánto tiempo veo resultados? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">La mayoría de clínicas ven resultados en las primeras 2 semanas: menos citas perdidas, más confirmaciones automáticas y mayor tasa de retorno de pacientes. El sistema aprende y mejora con el tiempo, por lo que los resultados aumentan mes a mes.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">¿Cuánto cuesta? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">El precio depende del tamaño de tu clínica y los sistemas que necesitás. Por eso ofrecemos el diagnóstico gratuito primero — para entender tu caso y darte una propuesta exacta. Sin compromiso, sin sorpresas.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">¿Qué pasa si no veo resultados? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">Trabajamos con garantía de resultados. Si en 90 días no ves mejoras medibles en tu clínica, revisamos el sistema sin coste adicional hasta que funcione. Nuestro éxito depende del tuyo.</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- CTA FINAL -->
+<div class="cta-final">
+  <h2>¿Cuántos pacientes perdiste este mes?</h2>
+  <p>Descubrilo en una llamada de 20 minutos. Completamente gratuita, sin compromiso.</p>
+  <button class="btn-white" onclick="openModal()">Quiero mi diagnóstico gratuito →</button>
+  <p class="cta-note">Sin compromiso · Sin configuración complicada · Soporte en español</p>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Operix<em>.</em></div>
+  <p style="margin-top:.4rem">Automatización e IA para clínicas dentales · Barcelona & Madrid</p>
+  <p style="margin-top:.8rem">© 2025 Operix · Todos los derechos reservados</p>
+</footer>
+
+<!-- MODAL -->
+<div class="overlay" id="overlay" onclick="overlayClick(event)">
+  <div class="modal">
+    <button class="modal-x" onclick="closeModal()">✕</button>
+    <div id="mform">
+      <h2>Diagnóstico gratuito</h2>
+      <p class="msub">Completá tus datos y te contactamos en menos de 24 horas.</p>
+      <form id="lf" novalidate>
+        <div class="r2">
+          <div class="fg"><label>Nombre <span class="r">*</span></label><input type="text" id="nombre" placeholder="Tu nombre"><div class="ferr" id="e-nombre">Obligatorio</div></div>
+          <div class="fg"><label>Apellido <span class="r">*</span></label><input type="text" id="apellido" placeholder="Tu apellido"><div class="ferr" id="e-apellido">Obligatorio</div></div>
+        </div>
+        <div class="fg"><label>Nombre de la clínica <span class="r">*</span></label><input type="text" id="clinica" placeholder="Ej: Clínica Dental Gràcia"><div class="ferr" id="e-clinica">Obligatorio</div></div>
+        <div class="r2">
+          <div class="fg"><label>Ciudad <span class="r">*</span></label><select id="ciudad"><option value="">Seleccionar…</option><option>Barcelona</option><option>Madrid</option><option>Valencia</option><option>Sevilla</option><option>Otra</option></select><div class="ferr" id="e-ciudad">Seleccioná una ciudad</div></div>
+          <div class="fg"><label>N.º de sillones</label><select id="sillas"><option value="">Seleccionar…</option><option value="1-2">1 – 2</option><option value="3-5">3 – 5</option><option value="6-10">6 – 10</option><option value="+10">Más de 10</option></select></div>
+        </div>
+        <div class="fg"><label>Email <span class="r">*</span></label><input type="email" id="email" placeholder="tu@clinica.com"><div class="ferr" id="e-email">Email inválido</div></div>
+        <div class="fg"><label>WhatsApp / teléfono <span class="r">*</span></label><input type="tel" id="telefono" placeholder="+34 600 000 000"><div class="ferr" id="e-telefono">Obligatorio</div></div>
+        <div class="fg"><label>¿Cuál es tu mayor problema ahora mismo?</label><textarea id="problema" placeholder="Ej: pacientes que no vuelven, agenda sin llenar…"></textarea></div>
+        <div class="fg consent-row"><input type="checkbox" id="rgpd"><label for="rgpd">Acepto el tratamiento de mis datos según la <a href="#" onclick="return false">política de privacidad</a> de Operix.</label></div>
+        <div class="ferr" id="e-rgpd" style="margin-top:-.4rem;margin-bottom:.4rem">Debés aceptar para continuar</div>
+        <button type="submit" class="btn-send" id="bsend">Solicitar diagnóstico gratuito →</button>
+      </form>
+    </div>
+    <div class="success" id="msuccess">
+      <div class="ok">✅</div>
+      <h3>¡Recibimos tu solicitud!</h3>
+      <p>En menos de 24 horas te contactamos por WhatsApp o email para coordinar tu diagnóstico gratuito.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+const WH='https://hook.eu1.make.com/is16atk3p1rxf8xpigam7w5bl1nwa1dl';
+function openModal(){document.getElementById('overlay').classList.add('on');document.body.style.overflow='hidden'}
+function closeModal(){document.getElementById('overlay').classList.remove('on');document.body.style.overflow=''}
+function overlayClick(e){if(e.target===document.getElementById('overlay'))closeModal()}
+function toggleFaq(btn){const item=btn.parentElement;item.classList.toggle('open')}
+function showErr(id,v){const e=document.getElementById('e-'+id),i=document.getElementById(id);if(e)e.style.display=v?'block':'none';if(i)i.classList.toggle('err',v)}
+function validate(){let ok=true;['nombre','apellido','clinica','ciudad','email','telefono'].forEach(f=>{const empty=!document.getElementById(f)?.value.trim();showErr(f,empty);if(empty)ok=false});const em=document.getElementById('email').value.trim();if(em&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){showErr('email',true);ok=false}const rg=document.getElementById('rgpd').checked;showErr('rgpd',!rg);if(!rg)ok=false;return ok}
+document.getElementById('lf').addEventListener('submit',async e=>{
+  e.preventDefault();if(!validate())return;
+  const btn=document.getElementById('bsend');btn.disabled=true;btn.textContent='Enviando…';
+  const p={nombre:document.getElementById('nombre').value.trim(),apellido:document.getElementById('apellido').value.trim(),clinica:document.getElementById('clinica').value.trim(),ciudad:document.getElementById('ciudad').value,sillas:document.getElementById('sillas').value,email:document.getElementById('email').value.trim(),telefono:document.getElementById('telefono').value.trim(),problema:document.getElementById('problema').value.trim(),fecha:new Date().toISOString(),fuente:document.referrer||'directo'};
+  try{const r=await fetch(WH,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(p)});if(r.ok||r.status===200){document.getElementById('mform').style.display='none';document.getElementById('msuccess').style.display='block'}else throw new Error()}catch{btn.disabled=false;btn.textContent='Solicitar diagnóstico gratuito →';alert('Error al enviar. Por favor intentá de nuevo.')}
+});
+</script>
+</body>
+</html>
